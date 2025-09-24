@@ -65,8 +65,6 @@
   </main>
 
   <script>
-    // ---- ДАНІ ----
-    // Полный список дудлов с рабочими изображениями (включая 2016–2010)
     const DOODLES = [
       {year:2025, link:"https://doodles.google/doodle/ukraine-independence-day-2025/", img:"https://www.google.com/logos/doodles/2025/ukraine-independence-day-2025-6753651837110882.2-2xa.gif",
         title_uk:"День незалежності України 2025", title_en:"Ukraine Independence Day 2025"},
@@ -102,13 +100,12 @@
         title_uk:"День незалежності України 2010", title_en:"Ukraine Independence Day 2010"},
     ].sort((a,b)=>b.year-a.year);
 
-    // UI тексты для разных языков
     const I18N = {
       uk: {
         pageTitle: "Дудли до Дня незалежності України (2010–2025)",
         headerTitle: "Дудли до Дня незалежності України",
         headerSub: "Офіційні Google Doodles, зібрані з архіву (2010–2025).",
-        openBtn: "Відкрити дудл",
+        openBtn: "Відкрити",
         footer: "Зображення належать © Google та використовуються через публічні URL з архіву Doodles. Натисніть «Відкрити дудл», щоб перейти на офіційну сторінку року.",
         metaDesc: "Усі Google Doodles до Дня незалежності України в одному місці: 2010–2025."
       },
@@ -116,13 +113,12 @@
         pageTitle: "Ukraine Independence Day Doodles (2010–2025)",
         headerTitle: "Ukraine Independence Day Doodles",
         headerSub: "Official Google Doodles collected from the archive (2010–2025).",
-        openBtn: "Open Doodle",
+        openBtn: "Open",
         footer: "Images © Google and used via public URLs from the Doodles archive. Click “Open Doodle” to visit the official page for the year.",
         metaDesc: "All Google Doodles for Ukraine's Independence Day in one place: 2010–2025."
       }
     };
 
-    // ---- ЛОГИКА ----
     const $ = sel => document.querySelector(sel);
     const grid = $('#grid');
     const btnUK = $('#btn-uk');
@@ -187,11 +183,9 @@
       }
     }
 
-    // События
     btnUK.addEventListener('click', ()=>setLang('uk'));
     btnEN.addEventListener('click', ()=>setLang('en'));
 
-    // Инициализация
     setLang(getInitialLang(), /*pushURL*/true);
   </script>
 </body>
