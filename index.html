@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Збірник Google Doodle до Дня незалежності України (2010–2025)</title>
+  <meta name="description" content="Усі дудли Google до Дня незалежності України в одному місці: 2010–2025." />
+  <style>
+    :root{
+      --bg:#fff; --ink:#1f2937; --muted:#6b7280; --card:#ffffff; --stroke:#e5e7eb;
+      --accent:#2563eb; --radius:16px; --shadow:0 4px 24px rgba(0,0,0,.08)
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);
+      font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,"Noto Sans","Helvetica Neue",Arial,sans-serif}
+    header{position:sticky;top:0;z-index:10;backdrop-filter:saturate(140%) blur(6px);
+      background:rgba(255,255,255,.8);border-bottom:1px solid var(--stroke)}
+    .wrap{max-width:1100px;margin:auto;padding:20px}
+    h1{margin:4px 0 0;font-weight:800;letter-spacing:.2px}
+    .sub{color:var(--muted);margin:4px 0 0}
+    .controls{display:flex;gap:12px;align-items:center;margin-top:12px;flex-wrap:wrap}
+    input[type="search"]{flex:1 1 260px;padding:10px 12px;border:1px solid var(--stroke);border-radius:12px;outline:none}
+    .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:18px}
+    .card{display:flex;flex-direction:column;gap:10px;background:var(--card);border:1px solid var(--stroke);
+      border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden;transition:transform .15s ease, box-shadow .15s ease}
+    .card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.12)}
+    .thumb{width:100%;aspect-ratio:5/2;display:block;object-fit:contain;background:#f8fafc}
+    .pad{padding:12px}
+    .meta{display:flex;justify-content:space-between;align-items:center;gap:8px}
+    .year{font-weight:800;font-size:18px}
+    .title{color:var(--muted);font-size:13px;line-height:1.3}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:8px 10px;border:1px solid var(--stroke);
+      border-radius:10px;text-decoration:none;color:var(--ink);font-weight:600;font-size:14px;transition:all .15s ease;background:#fff}
+    .btn:hover{border-color:var(--accent);color:var(--accent)}
+    footer{border-top:1px solid var(--stroke);margin-top:28px}
+    .notice{font-size:12px;color:var(--muted)}
+    .placeholder{display:grid;place-items:center;width:100%;aspect-ratio:5/2;background:#f3f4f6;color:#9ca3af;font-weight:700;font-size:22px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Дудли до Дня незалежності України</h1>
+      <p class="sub">Офіційні Google Doodles, зібрані з архіву (2010–2025).</p>
+      <div class="controls">
+        <input id="q" type="search" placeholder="Пошук за роком або описом… (наприклад, «соняшники», «парад»)" />
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section id="grid" class="grid" aria-live="polite"></section>
+
+    <footer class="pad">
+      <p class="notice">Зображення © Google (публічні URL з архіву Doodles). Тицяй «Відкрити дудл», щоб перейти на офіційну сторінку.</p>
+    </footer>
+  </main>
+
+  <script>
+    // УСІ роки з робочими картинками (включно 2016–2010)
+    const DOODLES = [
+      {year:2025, title:"Ukraine Independence Day 2025", link:"https://doodles.google/doodle/ukraine-independence-day-2025/", img:"https://www.google.com/logos/doodles/2025/ukraine-independence-day-2025-6753651837110882.2-2xa.gif"},
+      {year:2024, title:"Ukraine Independence Day 2024", link:"https://doodles.google/doodle/ukraine-independence-day-2024/", img:"https://www.google.com/logos/doodles/2024/ukraine-independence-day-2024-6753651837110277-2xa.gif"},
+      {year:2023, title:"Ukraine Independence Day 2023", link:"https://doodles.google/doodle/ukraine-independence-day-2023/", img:"https://www.google.com/logos/doodles/2023/ukraine-independence-day-2023-6753651837109925-2x.png"},
+      {year:2022, title:"Ukraine Independence Day 2022", link:"https://doodles.google/doodle/ukraine-independence-day-2022/", img:"https://www.google.com/logos/doodles/2022/ukraine-independence-day-2022-6753651837109633-2x.png"},
+      {year:2021, title:"Ukraine Independence Day 2021", link:"https://doodles.google/doodle/ukraine-independence-day-2021/", img:"https://www.google.com/logos/doodles/2021/ukraine-independence-day-2021-6753651837109046.2-2x.png"},
+      {year:2020, title:"Ukraine Independence Day 2020", link:"https://doodles.google/doodle/ukraine-independence-day-2020/", img:"https://www.google.com/logos/doodles/2020/ukraine-independence-day-2020-6753651837108509-2x.png"},
+      {year:2019, title:"Independence Day of Ukraine 2019", link:"https://doodles.google/doodle/independence-day-of-ukraine-2019/", img:"https://www.google.com/logos/doodles/2019/independence-day-of-ukraine-2019-6016889770737664-2xa.gif"},
+      {year:2018, title:"Ukraine Independence Day 2018", link:"https://doodles.google/doodle/ukraine-independence-day-2018/", img:"https://www.google.com/logos/doodles/2018/ukraine-independence-day-2018-6620620929368064-2xa.gif"},
+      {year:2017, title:"Ukraine Independence Day 2017", link:"https://doodles.google/doodle/ukraine-independence-day-2017/", img:"https://www.google.com/logos/doodles/2017/ukraine-independence-day-2017-6202208294010880-2x.jpg"},
+      {year:2016, title:"Ukraine Independence Day 2016", link:"https://doodles.google/doodle/ukraine-independence-day-2016/", img:"https://www.google.com/logos/doodles/2016/ukraine-independence-day-2016-6196143744614400-hp2x.jpg"},
+      {year:2015, title:"Ukraine Independence Day 2015", link:"https://doodles.google/doodle/ukraine-independence-day-2015/", img:"https://www.google.com/logos/doodles/2015/ukraine-independence-day-2015-5171096236064768-hp2x.jpg"},
+      {year:2014, title:"Ukraine Independence Day 2014", link:"https://doodles.google/doodle/ukraine-independence-day-2014/", img:"https://lh3.googleusercontent.com/GiX5XP1W1t0ihfDFzPk9LdwXKuH6VVqzLC7hW5Yy-ZAwEUwgsBBfKqqKAizQZW0rmXEWhVX9iyEWDQqzcKwdJE_gKtl_WF0H2E3vkuNHZg=s660"},
+      {year:2013, title:"Ukraine Independence Day 2013", link:"https://doodles.google/doodle/ukraine-independence-day-2013/", img:"https://lh3.googleusercontent.com/PeZmPLpCEVdTxmKJUrY7Er4ILzNphfhlHfm6aiVdBgG5b_LWxzJdDYtOWJoU7yb7NzI6rGv5x-KLRVPck3bPPpqARYQue_E3scPsHIQO=s660"},
+      {year:2012, title:"Ukraine Independence Day 2012", link:"https://doodles.google/doodle/ukraine-independence-day-2012/", img:"https://lh3.googleusercontent.com/iMHyjdhTE4tp7OsO2evbePBLCs4ZjYBih0eh8uYUvJsyu38gpWHQ7IeobXF6nKZ10Z-7geJfG6fR0igaFfMNSkkjkNSn8Td5YTQWr3Lb8A=s660"},
+      {year:2011, title:"Ukrainian Independence Day 2011", link:"https://doodles.google/doodle/ukrainian-independence-day-2011/", img:"https://lh3.googleusercontent.com/By0zhSGEWHv3fn_9kIFtqsXt8fTrKuZzwOJEsGZdNCGQGJ7wIuwtnLzS-XVQoLRGFUPcBQao9uxIycT2Mm0lFoWsSF8CIySHsY_BDvu3qA=s660"},
+      {year:2010, title:"Ukraine Independence Day 2010", link:"https://doodles.google/doodle/ukraine-independence-day-2010/", img:"https://lh3.googleusercontent.com/lz19cPbODKBVqgCbOci5OknozsK8c6aFML6MUkY_PpH_Laa4SYVhmS195FVGLUcSR5f4bvZQ2X9-8hafHTLBXMak8TCLpi8Ma4aCVtt8=s660"},
+    ].sort((a,b)=>b.year-a.year);
+
+    const grid = document.getElementById('grid');
+    const q = document.getElementById('q');
+
+    const createCard = (d) => {
+      const card = document.createElement('article');
+      card.className = 'card';
+      if (d.img){
+        const img = document.createElement('img');
+        img.className = 'thumb';
+        img.loading = 'lazy';
+        img.decoding = 'async';
+        img.alt = `${d.title} — ${d.year}`;
+        img.src = d.img;
+        card.append(img);
+      } else {
+        const ph = document.createElement('div');
+        ph.className = 'placeholder';
+        ph.textContent = d.year;
+        card.append(ph);
+      }
+      const pad = document.createElement('div');
+      pad.className = 'pad';
+      const meta = document.createElement('div');
+      meta.className = 'meta';
+      const left = document.createElement('div');
+      left.innerHTML = `<div class="year">${d.year}</div><div class="title">${d.title}</div>`;
+      const a = document.createElement('a');
+      a.className = 'btn';
+      a.href = d.link;
+      a.target = '_blank';
+      a.rel = 'nofollow noopener';
+      a.textContent = 'Відкрити';
+      meta.append(left,a);
+      pad.append(meta);
+      card.append(pad);
+      return card;
+    };
+
+    const render = () => {
+      const term = (q.value || '').toLowerCase().trim();
+      grid.innerHTML = '';
+      DOODLES
+        .filter(d => !term || (''+d.year).includes(term) || d.title.toLowerCase().includes(term))
+        .forEach(d => grid.append(createCard(d)));
+    };
+
+    q.addEventListener('input', render);
+    render();
+  </script>
+</body>
+</html>
